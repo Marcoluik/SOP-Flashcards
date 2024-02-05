@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: darkslategrey; 
+}
+
+h1{
+    color: white;
+}
+
+li, a, button{
+    font-family: "Roboto", s ans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    text-decoration: none; 
+}
+ 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+main {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.navbar {
+    list-style: none;
+}
+.navbar li {
+    display: inline-block;
+    padding: 0px 20 px;
+}
+
+.navbar li a {
+    transition: all 0.3s ease 0s;
+}
+.navbar li a :hover {
+    color: aqua;
+}
+button {
+    padding: 9px 25px;
+    background-color: aquamarine;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer
+    transition all 0.3s ease 0s;
+}
+
+button:hover{
+    background-color: blue;
+}
+.intro {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.contact {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: darkslategrey;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
