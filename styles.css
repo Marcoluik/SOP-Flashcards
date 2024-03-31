@@ -1,89 +1,88 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 * {
-    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Variables */
+:root {
+    --primary-color: #50330C;
+    --accent-color: #68BA84;
+    --offwhite-color: #F8F8F8;
+    --white-color: #FFFFFF;
+    --text-color: #939393;
+    --font-main: 'Poppins', sans-serif;
+    --font-weight-light: 300;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+}
+
+
+/* Button */
+.btn {
+    display: block;
+    padding: 25px 40px;
+    text-align: center;
+    min-width: 140px;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: var(--font-weight-medium);
+    color: var(--white-color);
+    background: var(--accent-color);
+    transition: 0.4s all ease-in-out;
+}
+@media (hover: hover) {
+    .btn:hover {
+        background: var(--primary-color);
+    }
+}
+.btn-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px; 
+}
+
+ul {
+    list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: darkslategrey; 
-}
+    overflow: hidden;
+    background-color: var(--primary-color);
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  li {
+    float: left;
+    border-right: 1px solid #bbb;
+  }
 
-h1{
-    color: white;
-}
 
-li, a, button{
-    font-family: "Roboto", s ans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    color: white;
-    text-decoration: none; 
-}
- 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 10%;
-}
-
-.logo {
-    cursor: pointer;
-}
-
-main {
-    max-width: 1400px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-.navbar {
-    list-style: none;
-}
-.navbar li {
-    display: inline-block;
-    padding: 0px 20 px;
-}
-
-.navbar li a {
-    transition: all 0.3s ease 0s;
-}
-.navbar li a :hover {
-    color: aqua;
-}
-button {
-    padding: 9px 25px;
-    background-color: aquamarine;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer
-    transition all 0.3s ease 0s;
-}
-
-button:hover{
-    background-color: blue;
-}
-.intro {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.contact {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    background-color: darkslategrey;
+  
+  li a {
+    display: block;
     color: white;
     text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-}
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  ul h1 {
+    color: var(--accent-color);
+    display: flex;
+    justify-content: flex-end;
+    
+    }
+  
+  li a:hover {
+    background-color: #111;
+  }
+  
+  
+
+  .active {
+    background-color: #4CAF50;
+  }
