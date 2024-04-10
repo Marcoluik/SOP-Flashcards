@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block title %}Flashcards{% endblock %} {% block
+content %}
+<h1 align="center">Flashcards</h1>
+
+<div class="accordion" id="flashcardStacks">
+  {% for stack in user.flashcard_stacks %}
+  <div class="card">
+    <div class="card-header" id="heading{{ stack.id }}">
+      <h2 class="mb-0">
+        <button
+          class="btn btn-link btn-block text-left"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapse{{ stack.id }}"
+          aria-expanded="true"
+          aria-controls="collapse{{ stack.id }}"
+        >
+          {{ stack.title }}
+        </button>
+      </h2>
+    </div>
+    <div
+      id="collapse{{ stack.id }}"
+      class="collapse"
+      aria-labelledby="heading{{ stack.id }}"
+      data-parent="#flashcardStacks"
+    >
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for flashcard in stack.flashcards %}
+          <li
+            class="list-group-item flashcard-item"
+            data-question="{{ flashcard.question }}"
+            data-answer="{{ flashcard.answer }}"
+          >
+            Click to view
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="text-center mt-4">
+  <a href="/createflashcards" class="btn btn-primary">
+    <i class="fa fa-plus"></i> Add Flashcard
+  </a>
+</div>
+
+{% endblock %} {% block scripts %}
+<script>
+  document.querySelectorAll(".flashcard-item").forEach((item) => {
+    item.addEventListener("click", function () {
+      alert(
+        "Question: " +
+          this.getAttribute("data-question") +
+          "\nAnswer: " +
+          this.getAttribute("data-answer")
+      );
+    });
+  });
+</script>
+{% endblock %}

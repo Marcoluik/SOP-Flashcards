@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Create Flashcards{% endblock %} {%
+block content %}
+<h1 align="center">Flashcards</h1>
+<div class="flashcard-creation-form">
+  <h2>Create a New Flashcard</h2>
+  <form action="/createflashcards" method="post">
+    <div class="form-group">
+      <label for="stack_name">Stack name</label>
+      <input type="text" id="stack_name" name="stack_name" required />
+    </div>
+    <div class="form-group">
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question" required />
+    </div>
+    <div class="form-group">
+      <label for="answer">Answer:</label>
+      <input type="text" id="answer" name="answer" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Create Flashcard</button>
+  </form>
+</div>
+
+{% endblock %} {% block scripts %}
+<script>
+  document.querySelectorAll(".flashcard-item").forEach((item) => {
+    item.addEventListener("click", function () {
+      alert(
+        "Question: " +
+          this.getAttribute("data-question") +
+          "\nAnswer: " +
+          this.getAttribute("data-answer")
+      );
+    });
+  });
+</script>
+{% endblock %}
