@@ -1,44 +1,37 @@
-{% extends "base.html" %} {% block title %}Flashcards{% endblock %} {% block
+{% extends "base.html" %} {% block title %} Flashcards {% endblock %} {% block
 content %}
 <h1 align="center">Flashcards</h1>
 
-<div class="accordion" id="flashcardStacks">
+<nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
+  <a class="navbar-brand" href="#">Flashcard Stacks</a>
+  <ul class="nav nav-pills">
+    {% for stack in user.flashcard_stacks %}
+    <li class="nav-item">
+      <a class="nav-link" href="#stack{{ stack.id }}">{{ stack.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+
+<div
+  data-bs-spy="scroll"
+  data-bs-target="#navbar-example2"
+  data-bs-offset="0"
+  class="scrollspy-example bg-light"
+  style="height: 200px; overflow-y: auto"
+>
   {% for stack in user.flashcard_stacks %}
-  <div class="card">
-    <div class="card-header" id="heading{{ stack.id }}">
-      <h2 class="mb-0">
-        <button
-          class="btn btn-link btn-block text-left"
-          type="button"
-          data-toggle="collapse"
-          data-target="#collapse{{ stack.id }}"
-          aria-expanded="true"
-          aria-controls="collapse{{ stack.id }}"
-        >
-          {{ stack.title }}
-        </button>
-      </h2>
+  <div id="stack{{ stack.id }}" class="py-5">
+    <h3>{{ stack.title }}</h4>
+    <ul class="list-group list-group-flush">
+      <h5>Description</h5>
+      <div class="d-grid gap-2 d-md-block">
+        <a href="/train?stackId={{ stack.id }}" class="btn btn-success" role="button">Train</a>
+        <a href="/editcards?stackId={{ stack.id }}" class="btn btn-warning" role="button">Edit</a>
+        <a href="/deletecards" class="btn btn-danger" role="button">Delete</a>
     </div>
-    <div
-      id="collapse{{ stack.id }}"
-      class="collapse"
-      aria-labelledby="heading{{ stack.id }}"
-      data-parent="#flashcardStacks"
-    >
-      <div class="card-body">
-        <ul class="list-group list-group-flush">
-          {% for flashcard in stack.flashcards %}
-          <li
-            class="list-group-item flashcard-item"
-            data-question="{{ flashcard.question }}"
-            data-answer="{{ flashcard.answer }}"
-          >
-            Click to view
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
+    
+    </ul>
   </div>
   {% endfor %}
 </div>
@@ -48,18 +41,4 @@ content %}
     <i class="fa fa-plus"></i> Add Flashcard
   </a>
 </div>
-
-{% endblock %} {% block scripts %}
-<script>
-  document.querySelectorAll(".flashcard-item").forEach((item) => {
-    item.addEventListener("click", function () {
-      alert(
-        "Question: " +
-          this.getAttribute("data-question") +
-          "\nAnswer: " +
-          this.getAttribute("data-answer")
-      );
-    });
-  });
-</script>
-{% endblock %}
+{% endblock %} {% block scripts %} {% endblock %}

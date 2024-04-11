@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="center">{{ stack.title }}</h1>
+<ul class="list-group list-group-flush" id="flashcards">
+  {% for flashcard in stack.flashcards %}
+  <li class="list-group-item">
+    <form method="POST" action="/update_flashcard/{{ flashcard.id }}">
+      <div class="form-group">
+        <strong>Q:</strong>
+        <textarea name="question" class="form-control">
+{{ flashcard.question }}</textarea
+        >
+      </div>
+      <div class="form-group">
+        <strong>A:</strong>
+        <textarea name="answer" class="form-control">
+{{ flashcard.answer }}</textarea
+        >
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+      <button
+        type="button"
+        class="close"
+        onclick="deleteFlashcard({{ flashcard.id }})"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+<br />
+<h1 align="center">Add more cards</h1>
+<form method="POST">
+  <input type="hidden" name="stack_name" value="{{ stack.title }}" />
+  <div class="form-group">
+    <label for="question">Question:</label>
+    <textarea name="question" id="question" class="form-control"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="answer">Answer:</label>
+    <textarea name="answer" id="answer" class="form-control"></textarea>
+  </div>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Flashcard</button>
+  </div>
+</form>
+
+{% endblock %} {% block scripts %}
+<script>
+  document.querySelectorAll(".flashcard-item").forEach((item) => {
+    item.addEventListener("click", function () {
+      alert(
+        "Question: " +
+          this.getAttribute("data-question") +
+          "\nAnswer: " +
+          this.getAttribute("data-answer")
+      );
+    });
+  });
+</script>
+{% endblock %}

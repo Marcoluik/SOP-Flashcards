@@ -90,6 +90,20 @@
         });
       }
     </script>
+    <script type="text/javascript">
+      function deleteFlashcard(cardId) {
+        console.log("Script loaded.");
+        fetch("/delete-card", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cardId: cardId }),
+        }).then((_res) => {
+          location.reload();
+        });
+      }
+    </script>
     {% endblock %}
   </body>
 </html>
