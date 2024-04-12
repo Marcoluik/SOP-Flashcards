@@ -1,5 +1,73 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
-<h1 align="center">{{ stack.title }}</h1>
-
-{% endblock %}
+    %}
+    
+    <h1 align="center">{{ stack.title }}</h1>
+    
+    {% for flashcard in stack.flashcards %}
+    <div class="container mt-5 flashcard" style="display: none">
+      <div class="row justify-content-center">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ flashcard.question }}</h5>
+            </div>
+            <div class="flashcard-answer" >
+              <p class="card-text" id="flashcardAnswer" style="opacity:0;">{{ flashcard.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    
+    <div class="text-center mt-4">
+       <button id="correct-button" class="btn btn-success" style="opacity:0;">
+        <i class="fa fa-arrow-up"></i>Correct
+      <button id="show-button" class="btn btn-primary">
+        <i class="fa fa-arrow-right"></i>Show
+      </button>
+        </button>
+        <button id="wrong-button" class="btn btn-danger" style="opacity:0;">
+            <i class="fa fa-arrow-down"></i>Wrong
+    </div>
+    
+    <script>
+        
+      const flashcards = document.querySelectorAll(".flashcard");
+      flashcards.forEach((flashcard) => (flashcard.style.display = "none"));
+      flashcards[0].style.display = "block";
+      const correctButton = document.getElementById("correct-button");
+      const wrongButton = document.getElementById("wrong-button");
+      const showButton = document.getElementById("show-button");
+      
+    
+      correctButton.addEventListener("click", () => {
+        let currentFlashcardIndex;
+        for (let i = 0; i < flashcards.length; i++) {
+          if (flashcards[i].style.display === "block") {
+            currentFlashcardIndex = i;
+            break;
+          }
+        }
+        let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
+        flashcards[nextIndex].style.display = "block";
+        console.log(flashcards[nextIndex])
+        if (currentFlashcardIndex !== undefined) {
+          flashcards[currentFlashcardIndex].style.display = "none";
+        }
+        correctButton.style.opacity = 0;
+        wrongButton.style.opacity = 0;
+        showButton.disabled = false
+      });
+      showButton.addEventListener("click", () => {
+        let answer = document.getElementById("flashcardAnswer");
+        correctButton.style.opacity = 1;
+        wrongButton.style.opacity = 1;
+        answer.style.opacity = 1;
+        showButton.disabled = true
+      }
+      )
+    </script>
+    
+    {% endblock %}
+    
