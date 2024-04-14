@@ -28,5 +28,17 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     notes = db.relationship("Note")
-    flashcard_stacks = db.relationship("FlashcardStack", backref="user", lazy=True) 
+    flashcard_stacks = db.relationship("FlashcardStack", backref="user", lazy=True)
+    counter = db.Column(db.Integer, default=1) # I dont use this anymore, dont know if its safe to delete
+    info = db.relationship("UserInfo")
+
+class UserInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    count = db.Column(db.Integer, default=0) 
+    streak = db.Column(db.Integer, default=0) 
+    streakpeak = db.Column(db.Integer, default=0)
+
+
+
 

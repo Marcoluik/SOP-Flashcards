@@ -14,6 +14,59 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
+    <style>
+      :root {
+        --bg-dark: #50596c; /* Primary dark background */
+        --bg-darker: #5f6469; /* Slightly lighter dark background */
+        --bg-darkest: #343a40; /* Darkest background, used for navbars */
+        --bg-answer: #333; /* Background for answer section */
+        --text-light: #d3d3d3; /* Light text color */
+        --border-color: #707070; /* Common border color */
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-darker);
+        color: var(--text-light);
+      }
+
+      body.dark-mode .jumbotron,
+      body.dark-mode .form-control,
+      body.dark-mode .list-group-item,
+      body.dark-mode .flashcard .card {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        border: 1px solid var(--border-color);
+      }
+
+      body.dark-mode .btn-primary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: var(--text-light);
+      }
+
+      body.dark-mode .navbar.bg-light,
+      body.dark-mode .scrollspy-example.bg-light,
+      body.dark-mode .nav.nav-pills .nav-link.active,
+      body.dark-mode .nav.nav-pills .show > .nav-link,
+      body.dark-mode .list-group-item {
+        background-color: var(--bg-darkest) !important;
+        color: white !important;
+      }
+
+      body.dark-mode .flashcard .card-body {
+        border-color: var(--border-color);
+      }
+
+      body.dark-mode .flashcard .card-title,
+      body.dark-mode .flashcard .card-text {
+        color: var(--text-light);
+      }
+
+      body.dark-mode .flashcard-answer {
+        background-color: var(--bg-answer);
+        border-top: 1px solid var(--border-color);
+      }
+    </style>
 
     <title>{% block title %}Home{% endblock %}</title>
   </head>
@@ -39,6 +92,11 @@
           <a class="nav-item nav-link" id="signup" href="/sign-up">Sign Up</a>
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           {% endif %}
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link" href="#" id="toggleDarkMode"
+              ><i class="fa fa-moon-o" aria-hidden="true"></i
+            ></a>
+          </div>
         </div>
       </div>
     </nav>
@@ -103,6 +161,29 @@
           location.reload();
         });
       }
+      function toggleDarkMode() {
+        var body = document.body;
+        body.classList.toggle("dark-mode"); // Toggle the class as before
+
+        // Check if dark mode is currently enabled and store that in local storage
+        if (body.classList.contains("dark-mode")) {
+          localStorage.setItem("darkMode", "enabled");
+        } else {
+          localStorage.removeItem("darkMode");
+        }
+      }
+
+      // Check for dark mode setting in local storage when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("darkMode") === "enabled") {
+          document.body.classList.add("dark-mode");
+        }
+      });
+
+      // Add event listener to your dark mode toggle button
+      document
+        .getElementById("toggleDarkMode")
+        .addEventListener("click", toggleDarkMode);
     </script>
     {% endblock %}
   </body>

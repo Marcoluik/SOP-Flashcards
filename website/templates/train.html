@@ -12,7 +12,7 @@
                 <h5 class="card-title">{{ flashcard.question }}</h5>
             </div>
             <div class="flashcard-answer" >
-              <p class="card-text" id="flashcardAnswer" style="opacity:0;">{{ flashcard.answer }}</p>
+              <p class="card-text" id="flashcardAnswer" style="opacity:0; text-align: center;">{{ flashcard.answer }}</p>
             </div>
           </div>
         </div>
@@ -53,6 +53,28 @@
           let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
           flashcards[nextIndex].style.display = "block";
           console.log(flashcards[nextIndex])
+          let answer = flashcardAnswers[currentFlashcardIndex]
+          answer.style.opacity = 0;
+          if (currentFlashcardIndex !== undefined) {
+            flashcards[currentFlashcardIndex].style.display = "none";
+          }
+          correctButton.style.opacity = 0;
+          wrongButton.style.opacity = 0;
+          showButton.disabled = false
+        });
+        wrongButton.addEventListener("click", () => {
+          let currentFlashcardIndex;
+          for (let i = 0; i < flashcards.length; i++) {
+            if (flashcards[i].style.display === "block") {
+              currentFlashcardIndex = i;
+              break;
+            }
+          }
+          let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
+          flashcards[nextIndex].style.display = "block";
+          console.log(flashcards[nextIndex])
+          let answer = flashcardAnswers[currentFlashcardIndex]
+          answer.style.opacity = 0;
           if (currentFlashcardIndex !== undefined) {
             flashcards[currentFlashcardIndex].style.display = "none";
           }

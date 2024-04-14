@@ -1,6 +1,69 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Notes</h1>
+<style>
+  .text-container {
+    display: flex;
+    justify-content: space-around; /* Distributes space evenly around items */
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-around; /* Distributes space evenly around items */
+    padding: 20px;
+  }
+  .button-container .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 20px;
+    width: 100px;
+    height: 100px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 40px;
+  }
+</style>
+<br />
+<div class="jumbotron">
+  <h1 class="display-4">Good to see you {{ user.first_name }}!</h1>
+  <br />
+  <p class="lead">
+    Small but consistent improvement leads to progress. 1% better a day would be
+    equal to a single stack of cards a day. We could write that as: (1.01)<sup
+      >365</sup
+    >
+    = 37.78 ! - Atomic Habits by James Clear
+  </p>
+  <hr class="my-4" />
+  <p>
+    You have gone through {{ user.counter }} stacks in your lifetime! Keep it
+    up!
+  </p>
+
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="flashcards" role="button"
+      >Go see your collection</a
+    >
+  </p>
+  <hr class="my-4" />
+  <div class="text-container">
+    <h3>Lifetime stacks</h3>
+    <h3>Streak</h3>
+    <h3>Highest streak</h3>
+  </div>
+  <div class="button-container">
+    <button type="button" class="btn btn-primary">6</button>
+    <button type="button" class="btn btn-primary">2</button>
+    <button type="button" class="btn btn-primary">4</button>
+  </div>
+</div>
+<h4 align="center">
+  Its important to have a clear mind prior to learning, so if you have any
+  thoughts, write them down below. Happy learning! :)
+</h4>
 <ul class="list-group list-group-flush" id="notes">
   {% for note in user.notes %}
   <li class="list-group-item">
@@ -18,4 +81,5 @@
     <button type="submit" class="btn btn-primary">Add Note</button>
   </div>
 </form>
+<br />
 {% endblock %}
