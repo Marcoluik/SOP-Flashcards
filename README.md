@@ -1,7 +1,7 @@
 # SOP-Flashcards
 This is a project that is made to help students learn faster.
 
-One drive med bilag
+One drive med bilag https://ktsdk-my.sharepoint.com/:f:/g/personal/marc739a_edu_nextkbh_dk/EmuBvM--OJpDm1BmqjOMHxkBQMKClKeluhDRE0GsockvYQ?e=C4r44l
 
 source venv/bin/activate
 flask --app main.py --debug run
