@@ -16,12 +16,12 @@
     />
     <style>
       :root {
-        --bg-dark: #50596c; /* Primary dark background */
-        --bg-darker: #5f6469; /* Slightly lighter dark background */
-        --bg-darkest: #343a40; /* Darkest background, used for navbars */
-        --bg-answer: #333; /* Background for answer section */
-        --text-light: #d3d3d3; /* Light text color */
-        --border-color: #707070; /* Common border color */
+        --bg-dark: #50596c;
+        --bg-darker: #5f6469;
+        --bg-darkest: #343a40;
+        --bg-answer: #333;
+        --text-light: #d3d3d3;
+        --border-color: #707070;
       }
 
       body.dark-mode {
@@ -92,11 +92,15 @@
           <a class="nav-item nav-link" id="signup" href="/sign-up">Sign Up</a>
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           {% endif %}
-          <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link" href="#" id="toggleDarkMode"
-              ><i class="fa fa-moon-o" aria-hidden="true"></i
-            ></a>
-          </div>
+        </div>
+        <div class="navbar-nav ml-auto">
+          <div id="timer" class="nav-item nav-link">15:00</div>
+          <button class="btn btn-outline-secondary" id="startTimerButton">
+            <i class="fa fa-clock-o" aria-hidden="true"></i> Start Timer
+          </button>
+          <a class="nav-item nav-link" href="#" id="toggleDarkMode"
+            ><i class="fa fa-moon-o" aria-hidden="true"></i
+          ></a>
         </div>
       </div>
     </nav>
@@ -139,16 +143,79 @@
 
     {% block javascript %}
     <script type="text/javascript">
-      function deleteNote(noteId) {
-        fetch("/delete-note", {
-          method: "POST",
-          body: JSON.stringify({ noteId: noteId }),
-        }).then((_res) => {
-          window.location.href = "/";
-        });
+      // Timer defineres minutter defineres men hentes fra local storage
+      let timer;
+      let minutes = localStorage.getItem("timerMinutes")
+        ? parseInt(localStorage.getItem("timerMinutes"), 10)
+        : 15;
+      let seconds = localStorage.getItem("timerSeconds")
+        ? parseInt(localStorage.getItem("timerSeconds"), 10)
+        : 0;
+      // Varaiabler initaliseres
+      let isPaused = false;
+      let enteredTime = null;
+      // Funktion der formaterer tiden så den er i traditionel format xx:xx
+      function formatTime(minutes, seconds) {
+        return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+          2,
+          "0"
+        )}`;
       }
-    </script>
-    <script type="text/javascript">
+
+      function updateTimer() {
+        const timerElement = document.getElementById("timer"); //Timer hentes udfra id
+        timerElement.textContent = formatTime(minutes, seconds);
+        // tjek om den er slut eller pauset
+        if (minutes === 0 && seconds === 0) {
+          clearInterval(timer);
+          alert("Time is up! Take a break.");
+          localStorage.removeItem("timerMinutes");
+          localStorage.removeItem("timerSeconds");
+        } else if (!isPaused) {
+          if (seconds > 0) {
+            seconds--;
+          } else {
+            seconds = 59;
+            minutes--;
+          }
+        }
+        //Herefter opdaterer den local storage
+        localStorage.setItem("timerMinutes", minutes);
+        localStorage.setItem("timerSeconds", seconds);
+      }
+      //start timer der kører funktioner og opretter timer
+      function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(updateTimer, 1000);
+      }
+      //re iniitialiser variabler til deres start stadie
+      function restartTimer() {
+        clearInterval(timer);
+        minutes = enteredTime || 15;
+        seconds = 0;
+        isPaused = false;
+        const timerElement = document.getElementById("timer");
+        timerElement.textContent = formatTime(minutes, seconds);
+        startTimer();
+        localStorage.setItem("timerMinutes", minutes);
+        localStorage.setItem("timerSeconds", seconds);
+      }
+
+      document
+        .getElementById("startTimerButton")
+        .addEventListener("click", function () {
+          restartTimer();
+        });
+
+      document.getElementById("timer").textContent = formatTime(
+        minutes,
+        seconds
+      );
+
+      if (minutes > 0 || seconds > 0) {
+        startTimer();
+      }
+      //fetcher blueprint funktion i views.py
       function deleteFlashcard(cardId) {
         console.log("Script loaded.");
         fetch("/delete-card", {
@@ -158,29 +225,35 @@
           },
           body: JSON.stringify({ cardId: cardId }),
         }).then((_res) => {
-          location.reload();
+          location.reload(); // opdater side
         });
       }
+      //fetcher blueprint funktion i views.py
+      function deleteNote(noteId) {
+        fetch("/delete-note", {
+          method: "POST",
+          body: JSON.stringify({ noteId: noteId }),
+        }).then((_res) => {
+          window.location.href = "/"; //opdater side men til home
+        });
+      }
+      //dark mode toggle on off tilføjer til local storage
       function toggleDarkMode() {
         var body = document.body;
-        body.classList.toggle("dark-mode"); // Toggle the class as before
+        body.classList.toggle("dark-mode");
 
-        // Check if dark mode is currently enabled and store that in local storage
         if (body.classList.contains("dark-mode")) {
           localStorage.setItem("darkMode", "enabled");
         } else {
           localStorage.removeItem("darkMode");
         }
       }
-
-      // Check for dark mode setting in local storage when the page loads
+      //Tjekker om findes i local storage og tilføjer darkmode da
       document.addEventListener("DOMContentLoaded", function () {
         if (localStorage.getItem("darkMode") === "enabled") {
           document.body.classList.add("dark-mode");
         }
       });
-
-      // Add event listener to your dark mode toggle button
       document
         .getElementById("toggleDarkMode")
         .addEventListener("click", toggleDarkMode);

@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+{% extends "base.html" %} {% block title %}Focus{% endblock %} {% block content
     %}
     
-    <h1 align="center">{{ stack.title }}</h1>
+    <h1 align="center">{{ stack.title }}</h1> 
     
     {% for flashcard in stack.flashcards %}
     <div class="container mt-5 flashcard" style="display: none">
@@ -32,7 +32,7 @@
     </div>
     
     <script>
-
+        //Definering af de forskellige konsatner
         const flashcards = document.querySelectorAll(".flashcard");
         const flashcardAnswers = document.querySelectorAll(".card-text");
         flashcards.forEach((flashcard) => (flashcard.style.display = "none"));
@@ -40,64 +40,80 @@
         const correctButton = document.getElementById("correct-button");
         const wrongButton = document.getElementById("wrong-button");
         const showButton = document.getElementById("show-button");
-  
-  
-        correctButton.addEventListener("click", () => {
-          let currentFlashcardIndex;
-          for (let i = 0; i < flashcards.length; i++) {
-            if (flashcards[i].style.display === "block") {
-              currentFlashcardIndex = i;
-              break;
-            }
-          }
-          let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
-          flashcards[nextIndex].style.display = "block";
-          console.log(flashcards[nextIndex])
-          let answer = flashcardAnswers[currentFlashcardIndex]
-          answer.style.opacity = 0;
-          if (currentFlashcardIndex !== undefined) {
-            flashcards[currentFlashcardIndex].style.display = "none";
-          }
-          correctButton.style.opacity = 0;
-          wrongButton.style.opacity = 0;
-          showButton.disabled = false
-        });
-        wrongButton.addEventListener("click", () => {
-          let currentFlashcardIndex;
-          for (let i = 0; i < flashcards.length; i++) {
-            if (flashcards[i].style.display === "block") {
-              currentFlashcardIndex = i;
-              break;
-            }
-          }
-          let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
-          flashcards[nextIndex].style.display = "block";
-          console.log(flashcards[nextIndex])
-          let answer = flashcardAnswers[currentFlashcardIndex]
-          answer.style.opacity = 0;
-          if (currentFlashcardIndex !== undefined) {
-            flashcards[currentFlashcardIndex].style.display = "none";
-          }
-          correctButton.style.opacity = 0;
-          wrongButton.style.opacity = 0;
-          showButton.disabled = false
-        });
+        //Showbutton funktionalitet ved klik
         showButton.addEventListener("click", () => {
-        let currentFlashcardIndex;
-        console.log(currentFlashcardIndex)
-          for (let i = 0; i < flashcards.length; i++) {
+        let currentFlashcardIndex; // Variabel der kan ændres
+        console.log(currentFlashcardIndex) //Log til konsol
+          //For løkke hvor i defineres, og der findes dt kort som har variablen block.
+          for (let i = 0; i < flashcards.length; i++) { 
             if (flashcards[i].style.display === "block") {
               currentFlashcardIndex = i;
               break;
             }
           }
-          let answer = flashcardAnswers[currentFlashcardIndex]
+        //Svar defineres som variabel men samme plads som synligt kort
+          let answer = flashcardAnswers[currentFlashcardIndex] 
+          //Knapper vises og svar vises
           correctButton.style.opacity = 1;
           wrongButton.style.opacity = 1;
           answer.style.opacity = 1;
           showButton.disabled = true
         }
         )
+        //Correct button funktionalitet
+        correctButton.addEventListener("click", () => {
+          let currentFlashcardIndex; // Variabel der kan ændres
+          // Forløkke hvor i defineres igen- samme metode som showbutton
+          for (let i = 0; i < flashcards.length; i++) {
+            if (flashcards[i].style.display === "block") {
+              currentFlashcardIndex = i;
+              break;
+            }
+          }
+          //næste index er aktuel +1 dog tages modul til længden så hvis vi på sidste kort går den tilbage til en
+          let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
+          //Næste kort blir synligt
+          flashcards[nextIndex].style.display = "block";
+          console.log(flashcards[nextIndex])
+          //Gamle svar skjules
+          let answer = flashcardAnswers[currentFlashcardIndex]
+          answer.style.opacity = 0;
+          //Gamle kort skjules
+          if (currentFlashcardIndex !== undefined) {
+            flashcards[currentFlashcardIndex].style.display = "none";
+          }
+          // Knapper vises og skjules
+          correctButton.style.opacity = 0;
+          wrongButton.style.opacity = 0;
+          showButton.disabled = false
+        });
+        //wrong button funktionalitet
+        wrongButton.addEventListener("click", () => {
+          let currentFlashcardIndex; // Variabel der kan ændres
+          // Forløkke hvor i defineres igen- samme metode som showbutton
+          for (let i = 0; i < flashcards.length; i++) {
+            if (flashcards[i].style.display === "block") {
+              currentFlashcardIndex = i;
+              break;
+            }
+          }
+          //næste index er aktuel +1 dog tages modul til længden så hvis vi på sidste kort går den tilbage til en
+          let nextIndex = (currentFlashcardIndex + 1) % flashcards.length;
+          //Næste kort blir synligt
+          flashcards[nextIndex].style.display = "block";
+          console.log(flashcards[nextIndex])
+          //Gamle svar skjules
+          let answer = flashcardAnswers[currentFlashcardIndex]
+          answer.style.opacity = 0;
+          //Gamle kort skjules
+          if (currentFlashcardIndex !== undefined) {
+            flashcards[currentFlashcardIndex].style.display = "none";
+          }
+          // Knapper vises og skjules
+          correctButton.style.opacity = 0;
+          wrongButton.style.opacity = 0;
+          showButton.disabled = false
+        });
       </script> 
     
     {% endblock %}

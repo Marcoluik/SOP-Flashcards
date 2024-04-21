@@ -5,7 +5,7 @@ from . import db
 import json
 
 views = Blueprint("views", __name__)
-
+ #login required for home side, login manager redirecter hvis ulovlig forsøg 
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def home():
