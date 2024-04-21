@@ -6,8 +6,6 @@ source venv/bin/activate
 flask --app main.py --debug run
 flask --app main --debug run --port 5002
 
-relationsship between user nad their cards 1:24:00
-
 Known issues:
 When creating new cards on the page editcards.html; they for some reason cannot be deleted, and if you reload the page they doubble. I do not know why this happens but when you go back to home, they will become like the others again.
 
